@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watchEffect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive } = Vue;
+      const App = {
+        setup() {
+          const num = ref(0);
+          const numData = reactive({ idx: 0 });
+
+          setTimeout(() => {
+            num.value++;
+            numData.idx++;
+          }, 1000);
+
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>readonly</title>
+    <style>
+      button {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{Num.idx}}</h1>
+      <button @click="AddFn">Add</button>
+      <button @click="Test">Add copy</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const { reactive } = Vue;
+      const App = {
+        setup() {
+          const Num = reactive({ idx: 0 });
+          const AddFn = () => {
+            Num.idx++;
+          };
+
+          const Test = () => {};
+
+          return { Num, AddFn, Test };
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
