@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-on:Event</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>{{num}}</h1>
+      <h2>{{data.num}}</h2>
+      <!-- v-on: 可以用 @ 來縮寫 -->
+      <button v-on:click="add">Add</button>
+      <button @click="remove">Remove</button>
+      <button @click="readOnly">readOnly</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, reactive, readonly} = Vue;
+      const App = {
+        setup(){
+          const num = ref(0),
+                data = reactive({num:0}),
+                onlyNum = readonly(num),
+                onlyData = readonly(data),
+                test = reactive([]);
+                add = () => {
+                  num.value++;
+                  data.num++;
+                }
+                remove = () => {
+                  num.value--;
+                  data.num--;
+                }
+                readOnly = () => {
+                  onlyNum.value++;
+                  onlyData.num++;
+                };
+          // test = [1,2,3,4,5,6];
+          console.log(num);
+          console.log(data);
+          console.log(test);
+          // console.log(test.value);
+          return {num, data, add, remove, test};
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

@@ -11,27 +11,34 @@
     <div id="app">
       <div class="input-box">
         <p>E-MAIL</p>
-        <input type="text" placeholder="輸入email" />
+        <input type="text" placeholder="輸入email" v-model="email"/>
       </div>
       <div class="input-box">
         <p>PASSWORD</p>
-        <input type="text" placeholder="輸入密碼" />
+        <input type="text" placeholder="輸入密碼" v-model="password"/>
       </div>
       <div class="input-box">
-        <input type="checkbox" id="checkbox" />
+        <input type="checkbox" id="checkbox" v-model="terms"/>
         <label for="checkbox">我已閱讀使用者條款</label>
       </div>
-      <a class="btn">送出</a>
+      <a class="btn" @click="handSubmit">送出</a>
     </div>
     <script src="./js/vue.js"></script>
     <script>
-      const App = {
-        setup() {
-          return {};
+      const {ref, reactive, readonly, computed, watch, onMounted} = Vue,
+      App = {
+        setup(){
+          // 在setup內寫let、const、function
+          const email = ref(''),
+                password = ref(''),
+                terms = ref(false),
+                handSubmit = () => {
+                  console.log(email, password, terms);
+                };
+          return {email,password,terms,handSubmit};
         },
       };
-
-      Vue.createApp(App).mount("#app");
+      Vue.createApp(App).mount('#app');
     </script>
   </body>
 </html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非同步處理</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: slategray;
+      }
+      .box {
+        width: 500px;
+      }
+      .box > .btnbox {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .box > .btnbox > a {
+        padding: 10px 10px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .img {
+        border: 8px solid #42b983;
+      }
+      .load {
+        width: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="box" v-if="load">
+        <div>
+          <!-- v-for="(item, idx) in imgArr.value"  -->
+          <img
+            v-for="(item, idx) in imgArr.arr" 
+            :key="item.url"
+            :src="item.url"
+            v-show="imgIdx === idx"
+            class="img"
+            alt=""
+          />
+        </div>
+        <div class="btnbox">
+          <a href="javascript:;" @click="imgPrev(-1)">上一張</a>
+          <a href="javascript:;" @click="imgNext(1)">下一張</a>
+        </div>
+      </div>
+      <img class="load" src="./images/load.gif" alt=""  v-if="!load"/>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {onMounted, ref, reactive, computed} = Vue,
+      App = {
+        setup(){
+          // const imgArr = reactive([]),
+          const imgArr = reactive({arr:[]}),
+                imgIdx = ref(0),
+                load = ref(false),
+                imgNext = (e) => {
+                  // console.log(e);
+                  imgIdx.value++;
+                  if(imgIdx.value > imgArr.arr.length - 1) imgIdx.value = 0;
+                  // if(imgIdx.value > imgArr.value.length - 1) imgIdx.value = 0;
+                  console.log(imgIdx.value);
+                },
+                imgPrev = (e) => {
+                  // console.log(e);
+                  imgIdx.value--;
+                  if(imgIdx.value < 0) imgIdx.value = imgArr.arr.length - 1;
+                  // if(imgIdx.value < 0) imgIdx.value = imgArr.value.length - 1;
+                  console.log(imgIdx.value);
+                },
+                handImgLoad = (ImgData) => {
+                  let i = 0;
+                  console.log(ImgData.length);
+                  ImgData.forEach((img) => {
+                    // Image() https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLImageElement/Image
+                    // 讓瀏覽器知道要載入圖片
+                    const imgLoad = new Image();
+                    imgLoad.src = img.url;
+                    // console.log(imgLoad); console.log(imgLoad.src);
+                    // onload 知道圖片甚麼時候載入完成
+                    imgLoad.onload = () => {
+                      i++;
+                      if(ImgData.length === i){
+                        imgArr.arr = ImgData;
+                        // imgArr.value = ImgData;
+                        load.value = true;
+                        console.log(imgArr);
+                      }
+                    }
+                  })
+                };
+                console.log(imgArr);
+                // var maxNumber = document.querySelectorAll('#bannerBox > li').length;
+                // nowNumber += maxNumber % maxNumber;
+          onMounted(() => {
+            axios.get('https://vue-lessons-api.herokuapp.com/photo/list')
+            .then((res) => {
+              // imgArr.arr = res.data;
+              // console.log(imgArr.arr);
+              handImgLoad(res.data);
+              console.log(res.data);
+            }).catch((error) => {
+              console.log(error.response.data);
+              console.error(error.response.data.msg);
+            });
+          })
+          return {imgArr,imgIdx,load,imgNext,imgPrev};
+        },
+      };
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

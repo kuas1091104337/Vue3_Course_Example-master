@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>twoWayBind</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{txt}}</h1>
+    <input type="text" v-model="txt" />
+    <br />
+    <br />
+    <h1>{{message.txt}}</h1>
+    <input type="text" v-model="message.txt" />
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    const { ref, reactive } = Vue;
+    const App = {
+      setup() {
+        const txt = ref('Hello Vue3!'),
+              message = reactive({ txt: 'Mike' });
+        return { txt, message };
+      },
+    };
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>常用的 Lifecycle Hooks</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{idx}}</h1>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, onBeforeMount, onMounted, onUpdated } = Vue,
+      App = {
+        setup() {
+          console.log('當vue掛載到app上面後執行');
+          const idx = ref(0);
+          setTimeout(() => {
+            idx.value = 1;
+            console.log(idx.value);
+          }, 3000);
+          // DOM 渲染前
+          onBeforeMount(() => console.log("DOM 渲染前"));
+          // DOM 渲染完成後
+          onMounted(() => console.log("DOM 渲染完成後"));
+          // 在資料更改導致virtual DOM重新渲染後調用
+          onUpdated(() => console.log("資料更改後"));
+          return {idx};
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

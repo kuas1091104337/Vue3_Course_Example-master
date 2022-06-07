@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watch deep</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, watch} = Vue,
+      App = {
+        setup(){
+          const data = ref({user:{}});
+          watch(
+            data.value.user,
+            (newVal,oldVal) => console.log(`new : ${newVal.name} , old : ${oldVal.name}`)//,
+            // {deep:true} // ref({user:{},age:[]})丟進來的資料很多筆，未知key的用
+          );
+          setTimeout(() => {
+            data.value.user.name = 'mike';
+            console.log(data.value.user.name);
+          },1000)
+          console.log(data.value.user.name);
+          return {};
+        },
+      };
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

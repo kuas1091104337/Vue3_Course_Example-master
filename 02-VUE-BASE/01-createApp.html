@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>createApp & setup</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{txt}}</h1>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    // ref可接受任何型別的參數定義,不會對物件或陣列內部屬性變動做監聽
+    // reactive只接受陣列或物件,可以做深層的監聽
+    // 使用ref和reactive監聽的資料，都是以obj物件在傳值
+    const { ref, reactive } = Vue;
+    const App = {
+      setup() {
+        let txt = ref('hello vue3'),
+            message = reactive({ txt: 'mike' });
+        console.log(txt);
+        console.log(message);
+        setTimeout(() => {
+          txt.value = 'mike';
+          // console.log(txt);
+        }, 1000)
+        return { txt };
+      },
+    };
+    Vue.createApp(App).mount('#app');
+  </script>
+</body>
+
+</html>

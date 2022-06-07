@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-for</title>
+    <style type="text/css">
+      .red{color: red;}
+      .blue{color: blue;}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <!-- 不只 class 連 src、alt 都可以用 v-bind: 來綁定，可以用 : 來縮寫 -->
+        <li 
+          v-for="(item,idx) in listArr"
+          v-bind:key="item.name"
+          :class="item.status"
+          v-show="item.show"
+        >
+          {{idx+1}} : {{item.name}}
+        </li>
+      </ul>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const { reactive } = Vue,
+      App = {
+        setup() {
+          const listArr = reactive([
+            { name: "2020 Vue3 專業職人 | 入門篇", show: true, status: "red" },
+            { name: "2020 Vue3 專業職人 | 加值篇", show: false, status: "blue" },
+            { name: "2020 Vue3 專業職人 | 進階篇", show: true, status: "red" },
+            { name: "現代 JavaScript 職人之路｜入門篇", show: true, status: "red" },
+            { name: "現代 JavaScript 職人之路｜中階實戰篇", show: false, status: "blue" },
+          ]);
+          // console.log(listArr[1].show);
+          setTimeout(() => listArr[1].show = true, 2000)
+          setTimeout(() => listArr[4].show = true, 4000)
+          return {listArr};
+        }
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

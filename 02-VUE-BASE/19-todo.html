@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO</title>
+    <link rel="stylesheet" href="./css/19-todo.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="wait">
+        <ul>
+          <li v-for="(item,idx) in startArr.content" :key="item.url" @click="handClick(item,idx)">
+            <img :src="item.url" alt="" />
+          </li>
+        </ul>
+      </div>
+      <div class="carried">
+        <ul>
+          <li v-for="(item,idx) in moveArr.content" :key="item.url" @click="resetClick(item,idx)">
+            <img :src="item.url" alt="" />
+          </li>
+        </ul>
+      </div>
+      <div :class="['winPage',{open:isWin}]" >
+        <h1>闖關成功</h1>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, reactive, onMounted, watch} = Vue,
+      App = {
+        setup(){
+          const isWin = ref(false),
+                winIdx = ref(0),
+                // 開始的拼圖
+                startArr = reactive({content:[]}),
+                // 移動過去的拼圖
+                moveArr = reactive({content:[]}),
+                handClick = (item,idx) => {
+                  // console.log(item); console.log(idx);
+                  moveArr.content.push(item);
+                  startArr.content.splice(idx,1);
+                },
+                resetClick = (item,idx) => {
+                  startArr.content.push(item);
+                  moveArr.content.splice(idx,1);
+                };
+          watch(
+            () => moveArr.content,
+            (newVal) => {
+              console.log(newVal)
+              winIdx.value = 0;
+              newVal.forEach((item,idx) => {
+                if(item.idx === idx) winIdx.value++;
+              });
+            },{deep:true}
+          ),
+          watch(winIdx,(newVal) => {if(newVal === 9) setTimeout(() => {isWin.value = true},400)});
+          onMounted(() => {
+            axios.get('./api/puzzle.json')
+            .then(function(res){
+              startArr.content = res.data;
+              console.log(res.data);
+            }).catch(function(error){
+              // 不是2XX系列進來catch
+              console.log(error.response.data);
+              console.error(error.response.data.msg);
+            });
+          });
+          return {isWin, winIdx, startArr, moveArr, handClick, resetClick};
+        },
+      };
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

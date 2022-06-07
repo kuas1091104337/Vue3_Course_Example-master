@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>箭頭函式運算式（arrow function expression）</title>
+  </head>
+  <body>
+    <a id="aLink1" href="javascript:;">Click1</a>
+    <a id="aLink2" href="javascript:;">Click2</a>
+    <script>
+      const $aLink1 = document.getElementById("aLink1"),
+        $aLink2 = document.getElementById("aLink2");
+      $aLink1.addEventListener("click", function () {
+        console.log("Click1");
+        console.log(this);
+      });
+      $aLink2.addEventListener("click", (e) => {
+        console.log("Click2");
+        console.log(this);
+        console.log(e.target);
+      });
+      const Add = (a, b) => a + b;
+      console.log(Add(1, 3));
+    </script>
+  </body>
+</html>

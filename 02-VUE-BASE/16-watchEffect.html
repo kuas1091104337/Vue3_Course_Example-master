@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watchEffect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, reactive, watchEffect} = Vue,
+      App = {
+        setup() {
+          let timer = null;
+          const num = ref(0),
+                numData = reactive({ idx: 0 }),
+                stop = watchEffect(() => {
+                  console.log(num.value);
+                  if(num.value >= 4){
+                    stop();
+                    clearInterval(timer);
+                  }
+                  // console.log(numData.idx);
+                })
+          // setTimeout(() => {
+          timer = setInterval(() => {
+            num.value++;
+            numData.idx++;
+          }, 1000);
+          return {};
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

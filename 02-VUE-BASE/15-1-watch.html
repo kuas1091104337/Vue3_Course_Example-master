@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, reactive, watch} = Vue,
+      App = {
+        setup(){
+          // 在setup內寫let、const、function
+          const num = ref(0),
+                numData = reactive({idx:0}),
+                dataNum = ref({idx:0});
+          console.log(num);
+          console.log(numData);
+          console.log(dataNum);
+          watch(num,(newNum,oldNum) => console.log(`new_N : ${newNum}, old_N : ${oldNum}`));
+          watch(
+            // numData.idx,
+            () => numData.idx,
+            (newNumData,oldNumData) => console.log(`new_D : ${newNumData}, old_D : ${oldNumData}`)
+          );
+          watch(
+            () => dataNum.value.idx,
+            (newDataNum,oldDataNum) => console.log(`new_DN : ${newDataNum}, old_DN : ${oldDataNum}`)
+          );
+          setInterval(() => {
+            if(num.value >= 10) return;
+            num.value++;
+          },1000);
+          setInterval(() => {
+            if(numData.idx >= 10) return;
+            numData.idx++;
+          },1000);
+          setInterval(() => {
+            if(dataNum.value.idx >= 10) return;
+            dataNum.value.idx++;
+          },1000);
+          return {
+            // 然後把let、const、function，return回畫面使用
+          };
+        },
+      };
+      Vue.createApp(App).mount('#app');
+
+    </script>
+  </body>
+</html>

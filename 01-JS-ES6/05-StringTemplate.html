@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>字串模板 string template</title>
+</head>
+
+<body>
+  <script>
+    const message1 = (name, age) => 'Hi 我叫' + name + '，我今年' + age + '歲。',
+      message2 = (name, age) => `Hi 我叫${name}，我今年${age}歲。`,
+      message3 = (name, age) => `
+      Hi 我叫
+      ${name}，
+      我今年
+      ${age}
+      歲。
+      `;
+    console.log(message1('mike', 99));
+    console.log(message2('alex', 55));
+    console.log(message3('amos', 40));
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>解構賦值 (Destructuring assignment)</title>
+</head>
+
+<body>
+  <script>
+    const obj = { name: "mike" },
+      arr = [],
+      txt = "abc",
+      num = 123;
+    // obj = 1; //error
+    obj.age = 12;
+    arr.push("mike");
+    // txt = 123 //error
+    // num = 'abc' //error
+    console.log(obj);
+    console.log(arr);
+
+    const user = {
+      name: "mike",
+      age: 15,
+      address: "Taiwan",
+    },
+      { name, age, address } = user, //es6 解構賦值
+      userData = {
+        // user = {name = data.name}
+        user,
+        sex: "boy",
+      };
+    console.log(user.name, user.age, user.address); //es5
+    console.log(name, age, address); //es6
+    console.log(userData); //es6
+  </script>
+</body>
+
+</html>

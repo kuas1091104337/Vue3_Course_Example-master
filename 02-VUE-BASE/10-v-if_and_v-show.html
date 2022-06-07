@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-if and v-show</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- if 用在1次性的資料載入，如會員登入後的資料 -->
+      <h1 id="vue-if" v-if="show">{{txt}}</h1>
+      <!-- show 用在畫面要頻繁復切換時 -->
+      <h2 id="vue-show" v-show="show">{{txt}}</h2>
+      <button @click="showHandler">Show Handler</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref} = Vue,
+      App = {
+        setup(){
+          const show = ref(false),
+                txt = ref('Hello Vue3!'),
+                showHandler = () => show.value = !show.value;
+          return {show, txt, showHandler};
+        },
+      };
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

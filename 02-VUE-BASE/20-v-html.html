@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-html</title>
+    <style>
+      .content {
+        width: 500px;
+        margin: 0 auto;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <div class="content" v-html="html.html"></div> -->
+      <div class="content" v-html="html"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, onMounted} = Vue;
+      const app = {
+        setup() {
+          const html = ref('');
+          onMounted(() => {
+            axios.get('https://vue-lessons-api.herokuapp.com/dom/content')
+            .then(function(res){
+              // html.value = res.data;
+              html.value = res.data.html;
+              console.log(res); console.log(res.data);
+            }).catch(function(error){
+              // 不是2XX系列進來catch
+              console.log(error.response.data);
+              console.error(error.response.data.msg);
+            });
+          });
+          return {html};
+        },
+      };
+      Vue.createApp(app).mount("#app");
+    </script>
+  </body>
+</html>
