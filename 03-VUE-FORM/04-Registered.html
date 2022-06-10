@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>registered</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/04-registered.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="!isReg">
+        <div class="input-box">
+          <p>NAME</p>
+          <input
+            type="text"
+            placeholder="輸入使用者名稱"
+            v-model="register.username"
+          />
+          <!-- v-model-save="register.username" -->
+          <p class="error" v-if="errorMessage.username">
+            {{errorMessage.username}}
+          </p>
+        </div>
+        <div class="input-box">
+          <p>PASSWORD</p>
+          <input
+            type="password"
+            placeholder="輸入密碼"
+            v-model="register.password"
+          />
+          <!-- v-model-save="register.password" -->
+          <p class="error" v-if="errorMessage.password">
+            {{errorMessage.password}}
+          </p>
+        </div>
+        <div class="input-box">
+          <p>E-MAIL</p>
+          <input
+            type="text"
+            placeholder="輸入email"
+            v-model="register.email"
+          />
+          <!-- v-model-save="register.email" -->
+          <p class="error" v-if="errorMessage.email">
+            {{errorMessage.email}}
+          </p>
+        </div>
+        <div class="input-box">
+          <p>年齡</p>
+          <input
+            type="number"
+            placeholder="輸入年齡"
+            v-model="register.age"
+          />
+          <!-- v-model-save="register.age" -->
+          <p class="error" v-if="errorMessage.age"></p>
+        </div>
+        <div class="input-box">
+          <input 
+            type="radio" 
+            id="boy" 
+            value="boy" 
+            v-model="register.sex"
+          />
+          <label for="boy">boy</label>
+          <input 
+            type="radio"
+            id="girl"
+            value="girl"
+            v-model="register.sex"
+          />
+          <label for="girl">girl</label>
+          <p class="error" v-if="errorMessage.sex"></p>
+        </div>
+        <div class="input-box">
+          <input
+            type="checkbox"
+            id="checkbox"
+            v-model="register.terms"
+          />
+          <label for="checkbox">我已閱讀使用者條款</label>
+        </div>
+        <a class="btn" @click="handSubmit">送出</a>
+      </div>
+      <div v-if="isReg">
+        <h1>註冊成功</h1>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <!-- 
+      {
+        username: 'mike',
+        password: '123456789',
+        sex: 'boy',
+        email: 'qwer@gmail.com',
+        age: '12'
+        terms: false,
+      }
+     -->
+    <script>
+      // if (username === "") errMsg["username"] = "使用者名稱不得為空";
+      // if (password === "") errMsg["password"] = "密碼不得為空";
+      // if (email === "") errMsg["email"] = "email不得為空";
+
+      // if (password.length < 6) errMsg["password"] = "密碼長度須超過6個字元";
+      // if (!regex.test(email)) errMsg["email"] = "請輸入正確的email格式";
+
+      // if (user_name) errMsg["username"] = "此使用者名稱已註冊過";
+      // if (user_email) errMsg["email"] = "此email已註冊過";
+      const {createApp, ref, reactive} = Vue,
+      App = createApp({
+        setup(){
+          const isReg = ref(false),
+                errorMessage = reactive({}),
+                register = reactive({
+                  username:'',
+                  password:'',
+                  sex:'',
+                  email:'',
+                  age:'',
+                  terms:false,
+                }),
+                handError = (errObj) => {
+                  Object.keys(errorMessage).forEach(key => errorMessage[key] = '');
+                  // Object.keys(errorMessage).forEach(k => delete errorMessage[k]);
+                  Object.keys(errObj).forEach(errKey => errorMessage[errKey] = errObj[errKey]);
+                },
+                handSubmit = () => {
+
+                  axios.post(
+                    'https://vue-lessons-api.herokuapp.com/auth/registered',
+                    register
+                  ).then((res) => {
+                    isReg.value = true;
+                    alert('註冊成功');
+                    // console.log(res); console.log(res.data);
+                  }).catch((error) => {
+                    handError(error.response.data.error_message);
+                    // console.log(error.response); // obj {}
+                    // console.error(error.response.data.error_message); // obj {}
+                  });
+                };//,
+                // submitLogin = () => {
+                //   for(var key in localStorage) {
+                //     if (/^form-(.+)/.test(key)) localStorage.removeItem(key);
+                //   }
+                //   alert("登入成功");
+                // };
+                // ,submitLogin
+          return {register,handSubmit,isReg,errorMessage,handError};
+        },
+      });
+      
+      // App.directive('model-save', {
+      //   mounted(el, binding) {
+      //     const setInputValue = (value) => el.value = value,
+      //           setSyncDate = (value) => binding.instance[el.className] = value;
+      //           setLocalStorage = (value) => localStorage.setItem(`form-${el.className}`, value);
+      //     if(!localStorage[`form-${el.className}`]) setLocalStorage(binding.value);
+      //     setInputValue(localStorage[`form-${el.className}`]);
+      //     setSyncDate(el.value);
+      //     el.handSave = (e) => {
+      //       setLocalStorage(e.target.value);
+      //       setSyncDate(e.target.value);
+      //     }
+      //     el.addEventListener("input", el.handSave);
+      //     el.addEventListener("change", el.handSave);
+      //   },
+      //   unmounted(el) {
+      //     el.removeEventListener("input", el.handSave);
+      //     el.removeEventListener("change", el.handSave);
+      //   },
+      // });
+      App.mount("#app")
+      // Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

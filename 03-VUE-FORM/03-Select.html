@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/03-Select.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="select-box">
+        <select v-model="selectCity">
+          <option disabled value="">請選擇縣市</option>
+          <option
+            v-for="item in twZip.city"
+            :key="item.name"
+            :value="item.name"
+          >
+            {{item.name}}
+          </option>
+        </select>
+        <select v-model="selectArea">
+          <option disabled value="">請選擇區域</option>
+          <option
+            v-for="item in twZip.area"
+            :key="item.name"
+            :value="item.zip"
+          >
+            {{item.name}}
+          </option>
+        </select>
+      </div>
+      <a class="btn" @click="handSubmit">送出</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, reactive, watch, onMounted} = Vue,
+      App = {
+        setup(){
+          const twZip = reactive({city:[],area:[]}),
+                selectCity = ref(''),
+                selectArea = ref(''),
+                handSubmit = () => console.log(`${selectCity.value}, ${selectArea.value}`);
+          watch(selectCity,(newCity) => {
+            const newArr = twZip.city.filter(city => city.name === newCity);
+            twZip.area = newArr[0].area;
+            selectArea.value = '';
+            console.log(newArr[0].area)
+          });
+          onMounted(() => {
+            axios.get('https://vue-lessons-api.herokuapp.com/city/list')
+            .then(function(res){
+              twZip.city = res.data.twzip.city;
+              console.log(twZip.city);
+              // console.log(res.data.twzip.city); // console.log(twZip);
+            }).catch(function(error){
+              console.log(error.response.data);
+              console.error(error.response.data.msg);
+            });
+          });
+          return {twZip,selectCity,selectArea,handSubmit};
+        },
+      };
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

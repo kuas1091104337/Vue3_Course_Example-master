@@ -36,28 +36,19 @@
     </div>
     <script src="./js/vue.js"></script>
     <script>
-      const { ref, watch } = Vue;
-      const App = {
-        setup() {
-          const lazyVal = ref("");
-          const numberVal = ref("");
-          const trimVal = ref("");
-
-          watch(lazyVal, (newVal) => {
-            console.log("lazy=>", newVal);
-          });
-          watch(numberVal, (newVal) => {
-            console.log("number=>", newVal);
-          });
-          watch(trimVal, (newVal) => {
-            console.log("trim=>", newVal);
-          });
-
-          return { lazyVal, numberVal, trimVal };
+      const {ref, watch} = Vue,
+      App = {
+        setup(){
+          const lazyVal = ref(''),
+                numberVal = ref(''),
+                trimVal = ref('');
+          watch(lazyVal,(newVal) => console.log(`lazy : ${newVal}`));
+          watch(numberVal,(newVal) => console.log(`number :`,newVal));
+          watch(trimVal,(newVal) => console.log(`trim : ${newVal}`));
+          return {lazyVal,numberVal,trimVal};
         },
       };
-
-      Vue.createApp(App).mount("#app");
+      Vue.createApp(App).mount('#app');
     </script>
   </body>
 </html>
