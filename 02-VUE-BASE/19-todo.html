@@ -10,7 +10,7 @@
     <div id="app">
       <div class="wait">
         <ul>
-          <li v-for="(item,idx) in startArr.content" :key="item.url" @click="handClick(item,idx)">
+          <li v-for="(item,idx) in startArr.content" :key="item.url" @click="handleClick(item,idx)">
             <img :src="item.url" alt="" />
           </li>
         </ul>
@@ -22,6 +22,7 @@
           </li>
         </ul>
       </div>
+      <!-- <div :class="['winPage',{open:win}]" > -->
       <div :class="['winPage',{open:isWin}]" >
         <h1>闖關成功</h1>
       </div>
@@ -29,16 +30,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
     <script src="./js/vue.js"></script>
     <script>
-      const {ref, reactive, onMounted, watch} = Vue,
+      const {ref, reactive, onMounted, watch, computed} = Vue,
       App = {
         setup(){
-          const isWin = ref(false),
-                winIdx = ref(0),
+          // const isWin = ref(false),
+          const winIdx = ref(0),
                 // 開始的拼圖
                 startArr = reactive({content:[]}),
                 // 移動過去的拼圖
                 moveArr = reactive({content:[]}),
-                handClick = (item,idx) => {
+                handleClick = (item,idx) => {
                   // console.log(item); console.log(idx);
                   moveArr.content.push(item);
                   startArr.content.splice(idx,1);
@@ -46,18 +47,25 @@
                 resetClick = (item,idx) => {
                   startArr.content.push(item);
                   moveArr.content.splice(idx,1);
-                };
-          watch(
-            () => moveArr.content,
-            (newVal) => {
-              console.log(newVal)
-              winIdx.value = 0;
-              newVal.forEach((item,idx) => {
-                if(item.idx === idx) winIdx.value++;
-              });
-            },{deep:true}
-          ),
-          watch(winIdx,(newVal) => {if(newVal === 9) setTimeout(() => {isWin.value = true},400)});
+                },
+                isWin = computed(() => {
+                  winIdx.value = 0;
+                  moveArr.content.forEach((item,idx) => {
+                    if(item.idx === idx) winIdx.value++;
+                  });
+                  console.log(winIdx.value);
+                  return winIdx.value === 9;
+                });
+          // watch(
+          //   () => moveArr.content,
+          //   newVal => {
+          //     winIdx.value = 0;
+          //     newVal.forEach((item,idx) => {
+          //       if(item.idx === idx) winIdx.value++;
+          //     });
+          //   },{deep:true}
+          // );
+          // watch(winIdx, newVal => {if(newVal === 9) isWin.value = true});
           onMounted(() => {
             axios.get('./api/puzzle.json')
             .then(function(res){
@@ -69,7 +77,7 @@
               console.error(error.response.data.msg);
             });
           });
-          return {isWin, winIdx, startArr, moveArr, handClick, resetClick};
+          return {isWin, winIdx, startArr, moveArr, handleClick, resetClick};
         },
       };
       Vue.createApp(App).mount('#app');

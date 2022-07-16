@@ -86,11 +86,11 @@
                   { name: "HTML5+Animate CC 網頁動畫與遊戲互動", money: 2000 },
                   { name: "現代 JavaScript 職人之路｜面試篇", money: 1800 },
                 ]),
-                filterArr = computed(() => listArr.filter((item) => item.money > 500))
-                // console.log(filterArr.value);
                 HandListShow = () => isOpen.value = !isOpen.value,
+                filterArr = computed(() => listArr.filter((item) => item.money > 500)),
                 boxH = computed(() => isOpen.value ? `${filterArr.value.length*40}px` : 0);
-                //, newArr, 
+                console.log(filterArr.value);
+                console.log(filterArr);
                 console.log(listArr.length);
           return {isOpen, filterArr, HandListShow, boxH};
         },

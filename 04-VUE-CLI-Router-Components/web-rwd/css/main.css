@@ -116,7 +116,6 @@ main > .mid {
   margin: 0 auto;
   background-color: #5b0fa1;
 }
-
 main > .mid > div {
   width: 33.3333%;
   height: 100%;
@@ -174,59 +173,36 @@ footer > div {
   text-align: justify;
 }
 @media screen and (max-width: 1044px) {
-  header > nav {
-    width: 100%;
-  }
-  header > nav > h1 {
-    margin-left: 5%;
-  }
+  header > nav { width: 100%; }
+  header > nav > h1 { margin-left: 5%; }
   /*--------------------------------------------------------------*/
   article > div {
     width: 90%;
     height: auto;
     margin: 0 auto;
   }
-  article > div > h3 {
-    font-size: 30px;
-  }
+  article > div > h3 { font-size: 30px; }
   article > div > p {
     font-size: 14px;
     line-height: 25px;
   }
   /*--------------------------------------------------------------*/
-  aside > .mid {
-    width: 100%;
-  }
-  aside > .mid > .text_content {
-    width: 77%;
-  }
+  aside > .mid {width: 100%;}
+  aside > .mid > .text_content {width: 77%;}
   aside > .mid > .text_content > h3 {
     font-size: 18px;
     padding-left: 3%;
   }
-  aside > .mid > a {
-    width: 20%;
-  }
+  aside > .mid > a {width: 20%;}
   /*--------------------------------------------------------------*/
-  main > .mid {
-    width: 100%;
-  }
-  .box2 {
-    background-position-x: 50%;
-  }
-  .box3 {
-    background-position-x: 50%;
-  }
+  main > .mid {width: 100%;}
+  .box2 {background-position-x: 50%;}
+  .box3 {background-position-x: 50%;}
   /*--------------------------------------------------------------*/
-  footer > div {
-    width: 100%;
-  }
+  footer > div {width: 100%;}
 }
-
 @media screen and (max-width: 730px) {
-  article {
-    height: 349px;
-  }
+  article { height: 349px; }
 }
 @media screen and (max-width: 640px) {
   a#moblie_menu {
@@ -246,16 +222,12 @@ footer > div {
     height: 37px;
     overflow: hidden;
   }
-  header.openMenu {
-    height: 232px;
-  }
+  header.openMenu { height: 232px; }
   header > nav {
     width: 100%;
     height: 232px;
   }
-  header > nav > h1 {
-    line-height: 37px;
-  }
+  header > nav > h1 { line-height: 37px; }
   header > nav > div {
     clear: both;
     width: 100%;
@@ -268,31 +240,25 @@ footer > div {
     line-height: 37px;
     text-align: center;
   }
-  article {
-    height: 175px;
-  }
+  article { height: 175px; }
+/*---------------------------------------------------------*/
   aside {
     width: 100%;
     height: 75px;
     background-color: #27212c;
   }
-  aside > .mid > .text_content {
-    width: 85%;
-  }
+  aside > .mid > .text_content { width: 85%; }
   aside > .mid > .text_content > h3 {
     width: 90%;
     line-height: 75px;
     letter-spacing: 0px;
     font-size: 0.5em;
-    /*---------------------------------------------------------*/
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /*---------------------------------------------------------*/
   }
-  aside > .mid > a {
-    width: 15%;
-  }
+  aside > .mid > a { width: 15%; }
+  /*---------------------------------------------------------*/
   main {
     width: 100%;
     height: auto;

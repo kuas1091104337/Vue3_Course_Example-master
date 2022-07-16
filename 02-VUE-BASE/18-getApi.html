@@ -94,7 +94,9 @@
                     // 讓瀏覽器知道要載入圖片
                     const imgLoad = new Image();
                     imgLoad.src = img.url;
-                    // console.log(imgLoad); console.log(imgLoad.src);
+                    console.log(imgLoad);
+                    console.log('imgLoad : '+imgLoad);
+                    console.log('imgLoad.src : '+imgLoad.src);
                     // onload 知道圖片甚麼時候載入完成
                     imgLoad.onload = () => {
                       i++;

@@ -26,12 +26,12 @@
       age: 15,
       address: "Taiwan",
     },
-      { name, age, address } = user, //es6 解構賦值
-      userData = {
-        // user = {name = data.name}
-        user,
-        sex: "boy",
-      };
+    { name, age, address } = user, //es6 解構賦值
+    userData = {
+      // user = {name = data.name}
+      user,
+      sex: "boy",
+    };
     console.log(user.name, user.age, user.address); //es5
     console.log(name, age, address); //es6
     console.log(userData); //es6

@@ -67,9 +67,9 @@
   <body>
     <div id="app">
       <a class="title" @click="showHandler">課程列表</a>
-      <!-- <ul class="box gogo" :class="{open:open}"> -->
       <!-- <ul :class="['box gogo',{open:open}]"> -->
-      <ul :class="['box','gogo',{open:open}]">
+      <!-- <ul :class="['box','gogo',{open:open}]"> -->
+      <ul class="box gogo" :class="{open:open}">
         <li v-for="(list, idx) in listArr" :key="list.name">
           {{idx + 1}}. {{list.name}}
         </li>
@@ -103,6 +103,7 @@
         },
       };
       Vue.createApp(App).mount("#app");
+
     </script>
   </body>
 </html>

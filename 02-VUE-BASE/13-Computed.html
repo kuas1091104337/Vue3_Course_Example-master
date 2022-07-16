@@ -60,18 +60,20 @@
   <body>
     <div id="app">
       <a @click="HandListShow" class="title">課程列表</a>
-      <!-- <ul class="box" :style="{height:boxH}"> -->
-      <ul class="box" :style="{height:boxHfunc()}">
-        <li v-for="(list, idx) in newArr" :key="list.course">{{list.render}}</li>
+      <!-- <ul class="box" :style="{height:boxHfunc()}"> -->
+      <ul class="box" :style="{height:boxH}">
+        <li v-for="(list, idx) in newArr" :key="list.render" ref="boxItem">{{list.render}}</li>
         <!-- <li v-for="(list, idx) in listArr" :key="list.name">{{list.name}}</li> -->
       </ul>
     </div>
     <script src="./js/vue.js"></script>
     <script>
-      const { ref, reactive, computed } = Vue,
+      const { ref, reactive, computed, onMounted } = Vue,
       App = {
         setup() {
           const isOpen = ref(true),
+                boxListH = ref(0),
+                boxItem =ref(null),
                 listArr = reactive([
                   { name: "2020 Vue3 專業職人 | 入門篇", money: 3200 },
                   { name: "2020 Vue3 專業職人 | 加值篇", money: 100 },
@@ -82,30 +84,38 @@
                   { name: "HTML5+Animate CC 網頁動畫與遊戲互動", money: 2000 },
                   { name: "現代 JavaScript 職人之路｜面試篇", money: 1800 },
                 ]),
-                newArr = computed(() => {
-                  // const arrData = listArr.map((item) => {
-                  return listArr.map((item) => {
-                    return {render:`課程：${item.name}，費用：${item.money}`}
-                  });
-                  // return arrData;
-                }),
+                newArr = computed(() => listArr.map((item) => ({render:`課程：${item.name}，費用：${item.money}`}))),
+                // newArr = computed(() => {
+                //   // const arrData = listArr.map((item) => {
+                //   return listArr.map((item) => { return {render:`課程：${item.name}，費用：${item.money}`} });
+                //   // return arrData;
+                // }),
                 HandListShow = () => isOpen.value = !isOpen.value,
                 // computed是1個函式，裡面要傳入callback function，計算高度的地方
                 // computed 會對計算的資料進行緩存，資料沒有被更改就不會重新計算執行
-                boxH = computed(() => isOpen.value ? `${listArr.length*40}px` : 0),
+                // boxH = computed(() => isOpen.value ? `${listArr.length*40}px` : 0);
+                // boxH = computed(() => isOpen.value ? `${listArr.length*boxListH.value}px` : 0);
+                boxH = computed(() => isOpen.value ? `${newArr.value.length*boxListH.value}px` : 0);
                 // boxH = computed(() => {
                 //   if(!isOpen.value) return 0;
                 //   return `${listArr.length*40}px`
                 // });
                 // methods(function) 不會緩存，每次都會重新執行，但可傳入參數進行處理
-                boxHfunc = () => isOpen.value ? `${listArr.length*40}px` : 0;
+                // boxHfunc = () => isOpen.value ? `${listArr.length*40}px` : 0;
+          onMounted(() => {
+            boxListH.value = boxItem.value.offsetHeight;
+            console.log(boxItem.value.offsetHeight);
+            console.log(boxListH.value);
+          });
+          // let HH = document.querySelector('.box_list').offsetHeight;
           return {
             isOpen,
             // listArr,
+            boxItem,
             newArr,
             HandListShow,
             boxH,
-            boxHfunc
+            // boxHfunc
           };
         },
       };

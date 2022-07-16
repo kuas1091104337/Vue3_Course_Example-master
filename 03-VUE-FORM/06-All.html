@@ -26,6 +26,17 @@
           v-model="password"
         />
       </div>
+      <ul class="input-box">
+        <li v-for="item in courseslist.tags" :key="item.tag">
+          <input
+            type="checkbox"
+            :id="item.tag"
+            :value="item.tag"
+            v-model="courseslist.selectArr"
+          />
+          <label :for="item.tag">{{item.tag}}</label>
+        </li>
+      </ul>
       <div class="input-box">
         <input
           type="checkbox"
@@ -45,15 +56,31 @@
           const email = ref(''),
                 password = ref(''),
                 terms = ref(false),
+                courseslist = reactive({
+                  selectArr : [],
+                  tags: [
+                    { tag: "JavaScript" },
+                    { tag: "Html" },
+                    { tag: "Css" },
+                    { tag: "Html5" },
+                    { tag: "Vuejs" },
+                    { tag: "React" },
+                    { tag: "Sass" },
+                    { tag: "Css3" },
+                    { tag: "Canvas" },
+                  ],
+                }),
                 handSubmit = () => {
                   const data = {
                     email : email.value,
                     password : password.value,
                     terms : terms.value,
+                    courseslist : courseslist.selectArr
                   }
                   console.log(data);
+                  console.log(courseslist.selectArr);
                 };
-          return {email,password,terms,handSubmit};
+          return {email,password,terms,handSubmit,courseslist};
         },
       };
       Vue.createApp(App).mount('#app');

@@ -6,30 +6,44 @@
     <title>Watch</title>
   </head>
   <body>
-    <div id="app"></div>
-
+    <div id="app">
+      <p>num : <span>{{num}}</span></p>
+      <p>numData : <span>{{numData.idx}}</span></p>
+      <p>dataNum : <span>{{dataNum.idx}}</span></p>
+      <p>{{data.user.name}}</p>
+    </div>
     <script src="./js/vue.js"></script>
     <script>
-      const {ref, reactive, watch} = Vue,
+      const {ref, reactive, watch, computed} = Vue,
       App = {
         setup(){
           // 在setup內寫let、const、function
           const num = ref(0),
                 numData = reactive({idx:0}),
-                dataNum = ref({idx:0});
-          console.log(num);
-          console.log(numData);
-          console.log(dataNum);
+                dataNum = ref({idx:0}),
+                data = ref({user:{}}),
+                text = ref(0);
+          // console.log(num);
+          console.log(numData.idx);
+          // console.log(dataNum);
+          // console.log(data);
           watch(num,(newNum,oldNum) => console.log(`new_N : ${newNum}, old_N : ${oldNum}`));
           watch(
-            // numData.idx,
             () => numData.idx,
             (newNumData,oldNumData) => console.log(`new_D : ${newNumData}, old_D : ${oldNumData}`)
           );
           watch(
             () => dataNum.value.idx,
+            // dataNum.value.idx,
             (newDataNum,oldDataNum) => console.log(`new_DN : ${newDataNum}, old_DN : ${oldDataNum}`)
           );
+          watch(data.value.user,newVal => console.log(newVal));
+          setInterval(() => {
+            if(text.value >= 10) return;
+            text.value++;
+            console.log(`new : ${text.value}`);
+          },1000);
+          
           setInterval(() => {
             if(num.value >= 10) return;
             num.value++;
@@ -42,8 +56,9 @@
             if(dataNum.value.idx >= 10) return;
             dataNum.value.idx++;
           },1000);
+          setTimeout(() => data.value.user.name = 'mike', 1000)
           return {
-            // 然後把let、const、function，return回畫面使用
+            num, numData, dataNum, data
           };
         },
       };
