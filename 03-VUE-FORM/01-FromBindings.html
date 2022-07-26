@@ -52,6 +52,9 @@
                     terms : terms.value,
                   }
                   console.log(data);
+                  email.value = '';
+                  password.value = '';
+                  terms.value = false;
                 };
           return {email,password,terms,handSubmit};
         },

@@ -4,21 +4,16 @@ import { useStore } from "vuex";
 import ImageBox from "./components/ImageBox/index.vue";
 import LoadingBar from "./components/LoadingBar.vue";
 export default {
-  components: {
-    LoadingBar,
-    ImageBox,
-  },
+  components: { LoadingBar, ImageBox },
   setup() {
-    const store = useStore();
-
-    const handImgLoad = (imgArr) => {};
-
-    const init = () => {};
-
+    const store = useStore(),
+          handImgLoad = (imgArr) => {},
+          init = () => {
+            store.dispatch('handInit')
+          };
     onMounted(() => {
       init();
     });
-
     return {};
   },
 };

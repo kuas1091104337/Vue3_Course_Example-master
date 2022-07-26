@@ -4,14 +4,10 @@ import { useStore } from "vuex";
 import ImgShow from "./ImgShow.vue";
 import ChangeBtn from "./ChangeBtn.vue";
 export default {
-  components: {
-    ImgShow,
-    ChangeBtn,
-  },
+  components: { ImgShow, ChangeBtn },
   setup() {
-    const store = useStore();
-
-    const isLoad = computed(() => store.getters.isLoad);
+    const store = useStore(),
+          isLoad = computed(() => store.getters.isLoad);
 
     return { isLoad };
   },
@@ -26,7 +22,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.box {
-  width: 500px;
-}
+.box {width: 500px;}
 </style>

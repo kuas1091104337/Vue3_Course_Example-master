@@ -1,7 +1,14 @@
 <template>
   <div class="about">
-    <nav></nav>
-    <main></main>
+    <nav>
+      <router-link to="/about/guide">Guide</router-link>
+      <router-link to="/about/changelog">Changelog</router-link>
+      <router-link to="/about/gitHub">GitHub</router-link>
+      <router-link to="/about/reference">Reference</router-link>
+    </nav>
+    <main>
+      <router-view/>
+    </main>
   </div>
 </template>
 <style lang="scss" scoped>

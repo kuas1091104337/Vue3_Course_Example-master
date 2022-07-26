@@ -3,13 +3,11 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
   setup() {
-    const store = useStore();
+    const store = useStore(),
+          photoArr = computed(() => store.getters.photoArr);
+          imgIdx = computed(() => store.getters.idx);
 
-    const photoArr = computed(() => store.getters.photoArr);
-
-    const idx = computed(() => store.getters.idx);
-
-    return { photoArr, idx };
+    return { photoArr, imgIdx };
   },
 };
 </script>
@@ -18,8 +16,8 @@ export default {
   <div>
     <img
       class="img"
-      v-for="(item, s) in photoArr"
-      v-show="idx === s"
+      v-for="(item, idx) in photoArr"
+      v-show="imgIdx === idx"
       :key="item.url"
       :src="item.url"
       alt=""
@@ -28,7 +26,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.img {
-  border: 8px solid #42b983;
-}
+.img {border: 8px solid #42b983;}
 </style>

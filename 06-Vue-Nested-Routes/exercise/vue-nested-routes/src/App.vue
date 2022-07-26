@@ -5,7 +5,7 @@
   </div>
   <div id="main">
     <router-view />
-  </div>
+  </div> 
 </template>
 
 <style lang="scss">

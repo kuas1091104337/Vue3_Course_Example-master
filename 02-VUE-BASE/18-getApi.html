@@ -43,9 +43,8 @@
   </head>
   <body>
     <div id="app">
-      <div class="box" v-if="load">
+      <div class="box" v-if="!load">
         <div>
-          <!-- v-for="(item, idx) in imgArr.value"  -->
           <img
             v-for="(item, idx) in imgArr.arr" 
             :key="item.url"
@@ -60,7 +59,7 @@
           <a href="javascript:;" @click="imgNext(1)">下一張</a>
         </div>
       </div>
-      <img class="load" src="./images/load.gif" alt=""  v-if="!load"/>
+      <img class="load" src="./images/load.gif" alt=""  v-if="load"/>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
     <script src="./js/vue.js"></script>
@@ -68,43 +67,36 @@
       const {onMounted, ref, reactive, computed} = Vue,
       App = {
         setup(){
-          // const imgArr = reactive([]),
           const imgArr = reactive({arr:[]}),
                 imgIdx = ref(0),
-                load = ref(false),
+                load = ref(true),
                 imgNext = (e) => {
-                  // console.log(e);
+                  console.log(e);
                   imgIdx.value++;
                   if(imgIdx.value > imgArr.arr.length - 1) imgIdx.value = 0;
-                  // if(imgIdx.value > imgArr.value.length - 1) imgIdx.value = 0;
-                  console.log(imgIdx.value);
                 },
                 imgPrev = (e) => {
-                  // console.log(e);
+                  console.log(e);
                   imgIdx.value--;
                   if(imgIdx.value < 0) imgIdx.value = imgArr.arr.length - 1;
-                  // if(imgIdx.value < 0) imgIdx.value = imgArr.value.length - 1;
-                  console.log(imgIdx.value);
                 },
                 handImgLoad = (ImgData) => {
                   let i = 0;
-                  console.log(ImgData.length);
+                  // console.log(ImgData.length);
                   ImgData.forEach((img) => {
                     // Image() https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLImageElement/Image
                     // 讓瀏覽器知道要載入圖片
                     const imgLoad = new Image();
                     imgLoad.src = img.url;
-                    console.log(imgLoad);
-                    console.log('imgLoad : '+imgLoad);
-                    console.log('imgLoad.src : '+imgLoad.src);
+                    // console.log(imgLoad);
+                    // console.log('imgLoad.src : '+imgLoad.src);
                     // onload 知道圖片甚麼時候載入完成
                     imgLoad.onload = () => {
                       i++;
                       if(ImgData.length === i){
                         imgArr.arr = ImgData;
-                        // imgArr.value = ImgData;
-                        load.value = true;
-                        console.log(imgArr);
+                        load.value = false;
+                        // console.log(imgArr);
                       }
                     }
                   })
@@ -116,7 +108,6 @@
             axios.get('https://vue-lessons-api.herokuapp.com/photo/list')
             .then((res) => {
               // imgArr.arr = res.data;
-              // console.log(imgArr.arr);
               handImgLoad(res.data);
               console.log(res.data);
             }).catch((error) => {
