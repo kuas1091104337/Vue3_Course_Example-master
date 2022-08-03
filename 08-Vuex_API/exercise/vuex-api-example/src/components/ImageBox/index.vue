@@ -5,10 +5,9 @@ import ImgShow from "./ImgShow.vue";
 import ChangeBtn from "./ChangeBtn.vue";
 export default {
   components: { ImgShow, ChangeBtn },
-  setup() {
+  setup() { // 抓資料 和 打dispatch
     const store = useStore(),
           isLoad = computed(() => store.getters.isLoad);
-
     return { isLoad };
   },
 };

@@ -2,11 +2,9 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
-  setup() {
-    const store = useStore();
-
-    const isLoad = computed(() => store.getters.isLoad);
-
+  setup() { // 抓資料 和 打dispatch
+    const store = useStore(),
+          isLoad = computed(() => store.getters.isLoad);
     return { isLoad };
   },
 };

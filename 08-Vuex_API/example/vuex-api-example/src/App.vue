@@ -4,13 +4,9 @@ import { useStore } from "vuex";
 import ImageBox from "./components/ImageBox/index.vue";
 import LoadingBar from "./components/LoadingBar.vue";
 export default {
-  components: {
-    LoadingBar,
-    ImageBox,
-  },
+  components: { LoadingBar, ImageBox, },
   setup() {
     const store = useStore();
-
     const handImgLoad = (imgArr) => {
       let i = 0;
       imgArr.forEach((image) => {
@@ -22,17 +18,14 @@ export default {
         };
       });
     };
-
     const init = () => {
       store.dispatch("initLoad").then((photoArr) => {
         handImgLoad(photoArr);
       });
     };
-
     onMounted(() => {
       init();
     });
-
     return {};
   },
 };

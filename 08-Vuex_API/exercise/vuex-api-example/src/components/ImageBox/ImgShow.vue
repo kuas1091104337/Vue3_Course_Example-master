@@ -2,11 +2,10 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
-  setup() {
+  setup() { // 抓資料 和 打dispatch
     const store = useStore(),
-          photoArr = computed(() => store.getters.photoArr);
+          photoArr = computed(() => store.getters.photoArr),
           imgIdx = computed(() => store.getters.idx);
-
     return { photoArr, imgIdx };
   },
 };

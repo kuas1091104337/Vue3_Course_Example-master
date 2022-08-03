@@ -2,21 +2,18 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
-  setup() {
-    const store = useStore();
-
-    const addImg = () => {};
-
-    const removeImg = () => {};
-
-    return { addImg, removeImg };
+  setup() { // 抓資料 和 打dispatch
+    const store = useStore(),
+          nextImg = () => store.dispatch('handNext'),
+          prevImg = () => store.dispatch('handPrev');
+    return { nextImg, prevImg };
   },
 };
 </script>
 <template>
   <div class="btnbox">
-    <a @click="removeImg" href="javascript:;">上一張</a>
-    <a @click="addImg" href="javascript:;">下一張</a>
+    <a @click="prevImg" href="javascript:;">上一張</a>
+    <a @click="nextImg" href="javascript:;">下一張</a>
   </div>
 </template>
 
