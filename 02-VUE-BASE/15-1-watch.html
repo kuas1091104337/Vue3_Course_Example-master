@@ -8,9 +8,13 @@
   <body>
     <div id="app">
       <p>num : <span>{{num}}</span></p>
-      <p>numData : <span>{{numData.idx}}</span></p>
+      <p>numData : <span>{{numData.num}}</span></p>
       <p>dataNum : <span>{{dataNum.idx}}</span></p>
       <p>{{data.user.name}}</p>
+      <p>text : <span>{{text}}</span></p>
+      <p>computedNum : <span>{{computedNum}}</span></p>
+      <p>computedLogNum : <span>{{computedLogNum}}</span></p>
+      <!-- <p> : <span>{{}}</span></p> -->
     </div>
     <script src="./js/vue.js"></script>
     <script>
@@ -19,17 +23,25 @@
         setup(){
           // 在setup內寫let、const、function
           const num = ref(0),
-                numData = reactive({idx:0}),
+                numData = reactive({num:0}),
                 dataNum = ref({idx:0}),
                 data = ref({user:{}}),
-                text = ref(0);
+                text = ref(0),
+                computedNum = ref(0),
+                computedLogNum = computed(() => {
+                  setInterval(() => {
+                    if(computedNum.value >= 10) return;
+                    return computedNum.value++;
+                  },1000);
+                });
+          console.log('computedLogNum : '+computedLogNum.value);
           // console.log(num);
-          console.log(numData.idx);
+          // console.log(numData.num);
           // console.log(dataNum);
           // console.log(data);
           watch(num,(newNum,oldNum) => console.log(`new_N : ${newNum}, old_N : ${oldNum}`));
           watch(
-            () => numData.idx,
+            () => numData.num,
             (newNumData,oldNumData) => console.log(`new_D : ${newNumData}, old_D : ${oldNumData}`)
           );
           watch(
@@ -43,14 +55,13 @@
             text.value++;
             console.log(`new : ${text.value}`);
           },1000);
-          
           setInterval(() => {
             if(num.value >= 10) return;
             num.value++;
           },1000);
           setInterval(() => {
-            if(numData.idx >= 10) return;
-            numData.idx++;
+            if(numData.num >= 10) return;
+            numData.num++;
           },1000);
           setInterval(() => {
             if(dataNum.value.idx >= 10) return;
@@ -58,7 +69,7 @@
           },1000);
           setTimeout(() => data.value.user.name = 'mike', 1000)
           return {
-            num, numData, dataNum, data
+            num, numData, dataNum, data, text, computedNum, computedLogNum
           };
         },
       };

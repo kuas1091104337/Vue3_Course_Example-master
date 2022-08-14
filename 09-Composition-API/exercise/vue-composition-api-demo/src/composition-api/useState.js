@@ -3,6 +3,9 @@ export const stateAdd = () => {
   const idx = ref(0),
         addState = () => {
           idx.value++;
+        },
+        removeState = () => {
+          idx.value--;
         };
-  return { idx, addState }
+  return { idx, addState, removeState }
 }

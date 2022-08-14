@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watch & computed</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{refObj.num}}</h1>
+      <h1>{{reactiveObj.num}}</h1>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const {ref, reactive, readonly, watch} = Vue,
+      App = {
+        setup(){
+          // 在setup內寫let、const、function
+          const refObj = ref({num:0}),
+                reactiveObj = reactive({num:0}),
+                txtRef = ref({user: {name: 'jim'}}),
+                txtReactive = reactive({user: {name: 'jim'}});
+          watch(txtReactive, (newVal) => console.log('reactive', newVal.user.name));
+          // setTimeout(() => {
+          setInterval(() => {
+            refObj.value.num++;
+            reactiveObj.num++;
+            // refObj.value.num = 1;
+            // reactiveObj.num = 1;
+          },1000);
+          setTimeout(() => {
+            txtRef.value.user.name = 'song';
+            txtReactive.user.name = 'song';
+          }, 1000)
+          return {refObj, reactiveObj, txtRef, txtReactive};
+        },
+      };
+      Vue.createApp(App).mount('#app');
+    </script>
+  </body>
+</html>

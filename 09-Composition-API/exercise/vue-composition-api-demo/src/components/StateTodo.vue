@@ -2,8 +2,8 @@
 import { useStateAdd } from '../composition-api';
 export default {
   setup() {
-    const { idx, addState } = useStateAdd();
-    return { idx, addState };
+    const { idx, addState, removeState } = useStateAdd();
+    return { idx, addState, removeState };
   },
 };
 </script>
@@ -11,6 +11,7 @@ export default {
   <div class="block">
     <h1>number:{{idx}}</h1>
     <button @click="addState">add</button>
+    <button @click="removeState">remove</button>
   </div>
 </template>
 

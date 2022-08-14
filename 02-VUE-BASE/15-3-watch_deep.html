@@ -4,15 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>watch deep</title>
+    <style type="text/css">
+      .wrap{
+        text-align: center;
+        line-height: 35px;
+        display: flex;
+      }
+      .wrap_btn{
+        width: 50px;
+        height: 35px;
+        background-color: #ccc;
+      }
+      .wrap_btn.prev{ border-radius: 20px 0 0 20px; }
+      .wrap_btn.next{border-radius: 0 20px 20px 0;}
+      .list{
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0 20px;
+      }
+      .list_item{
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        background-color: yellow;
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px #000;
+        transition: .4s;
+      }
+      .list_item.active{
+        color: #fff;
+        background-color: red;
+      }
+      .list_item + .list_item{margin-left: 20px;}
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="wrap">
+        <div class="wrap_btn prev" @click="idxPrevNext(-1)">prev</div>
+        <ul class="list">
+          <!-- watch-1 -->
+          <!-- <li 
+            v-for="item in idxData"
+            :key="item.num" 
+            :class="['list_item',{active: idx === item.num}]" 
+            @click="idxChange(item.num)"
+          > -->
+          <!-- watch-2 -->
+          <li 
+            v-for="item in idxData"
+            :key="item.num" 
+            :class="['list_item',{active: idx.val === item.num}]" 
+            @click="idxChange(item.num)"
+          >
+            {{item.num}}
+          </li>
+        </ul>
+        <div class="wrap_btn next" @click="idxPrevNext(1)">next</div>
+      </div>
+    </div>
     <script src="./js/vue.js"></script>
     <script>
-      const {ref, watch} = Vue,
+      const {ref, reactive, watch} = Vue,
       App = {
         setup(){
-          const data = ref({user:{}});
+          const data = ref({user:{}}),
+                // watch-1
+                // idx = ref(0),
+                // watch-2
+                idx = reactive({val:0}),
+                idxData = reactive([
+                  {num:0},{num:1},{num:2},{num:3},{num:4}
+                ]),
+                // watch-1
+                // idxChange = (nowIdx) => idx.value = nowIdx,
+                // watch-2
+                idxChange = (nowIdx) => idx.val = nowIdx,
+                idxPrevNext = (val) => {
+                  // watch-1
+                  // idx.value = idx.value + val;
+                  // if(idx.value < 0){
+                  //   idx.value = idxData.length - 1;
+                  // }else if(idx.value > idxData.length - 1){
+                  //   idx.value = 0;
+                  // }
+                  // idx.value = (idx.value + idxData.length) % idxData.length;
+                  // watch-2
+                  idx.val = idx.val + val;
+                  idx.val = (idx.val + idxData.length) % idxData.length;
+                };
+          // watch(idx,(newIdx,oldIdx) => console.log(`new : ${newIdx}, old : ${oldIdx}`) )
+          watch(
+            () => idx.val,
+            (newIdx,oldIdx) => console.log(`new : ${newIdx}, old : ${oldIdx}`)
+          )
           watch(
             data.value.user,
             (newVal,oldVal) => console.log(`new : ${newVal.name} , old : ${oldVal.name}`)//,
@@ -23,7 +109,7 @@
             console.log(data.value.user.name);
           },1000)
           console.log(data.value.user.name);
-          return {};
+          return {idx, idxData, idxChange, idxPrevNext};
         },
       };
       Vue.createApp(App).mount('#app');

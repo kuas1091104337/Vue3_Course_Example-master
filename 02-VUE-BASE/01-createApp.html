@@ -10,6 +10,10 @@
 <body>
   <div id="app">
     <h1>{{txt}}</h1>
+    <h1>{{txt.split('').reverse().join('')}}</h1>
+    <h2>{{message.txt}}</h2>
+    <h2>{{message.txt.split('').reverse().join('')}}</h2>
+    <h2>{{message}}</h2>
   </div>
   <script src="./js/vue.js"></script>
   <script>
@@ -20,14 +24,15 @@
     const App = {
       setup() {
         let txt = ref('hello vue3'),
-            message = reactive({ txt: 'mike' });
+            message = reactive({txt:'hello vue3'});
         console.log(txt);
         console.log(message);
         setTimeout(() => {
           txt.value = 'mike';
+          message.txt = 'mike';
           // console.log(txt);
         }, 1000)
-        return { txt };
+        return { txt, message };
       },
     };
     Vue.createApp(App).mount('#app');

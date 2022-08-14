@@ -59,6 +59,7 @@
   </head>
   <body>
     <div id="app">
+      <input type="number" v-model="searchMoney">
       <a @click="HandListShow" class="title">課程列表</a>
       <ul class="box" :style="{height:boxH}">
         <!-- v-for 和 v-if 無法同時使用，會有優先順序的問題(v-if先，v-for後) -->
@@ -75,7 +76,9 @@
       const { ref, reactive, computed } = Vue,
       App = {
         setup() {
+          let val = 500;
           const isOpen = ref(true),
+                searchMoney = ref(0),
                 listArr = reactive([
                   { name: "2020 Vue3 專業職人 | 入門篇", money: 3200 },
                   { name: "2020 Vue3 專業職人 | 加值篇", money: 100 },
@@ -87,12 +90,18 @@
                   { name: "現代 JavaScript 職人之路｜面試篇", money: 1800 },
                 ]),
                 HandListShow = () => isOpen.value = !isOpen.value,
-                filterArr = computed(() => listArr.filter((item) => item.money > 500)),
+                // filterArr = computed(() => {
+                //   return listArr.filter((item) => {
+                //     return item.money > searchMoney.value;
+                //   })
+                // }),
+                filterArr = computed(() => listArr.filter((item) => item.money >= searchMoney.value)),
+                // filterArr = computed(() => listArr.filter((item) => item.money > 500)),
                 boxH = computed(() => isOpen.value ? `${filterArr.value.length*40}px` : 0);
                 console.log(filterArr.value);
                 console.log(filterArr);
                 console.log(listArr.length);
-          return {isOpen, filterArr, HandListShow, boxH};
+          return {isOpen, filterArr, HandListShow, boxH, searchMoney};
         },
       };
       Vue.createApp(App).mount("#app");
