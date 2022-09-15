@@ -104,8 +104,9 @@
                 // boxHfunc = () => isOpen.value ? `${listArr.length*40}px` : 0;
           onMounted(() => {
             boxListH.value = boxItem.value.offsetHeight;
+            console.log(boxItem);
+            console.log(boxItem.value);
             console.log(boxItem.value.offsetHeight);
-            console.log(boxListH.value);
           });
           // let HH = document.querySelector('.box_list').offsetHeight;
           return {
