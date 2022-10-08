@@ -4,9 +4,7 @@ import { useStore } from "vuex";
 export default {
   setup() {
     const store = useStore();
-
     const isLoad = computed(() => store.getters.isLoad);
-
     return { isLoad };
   },
 };

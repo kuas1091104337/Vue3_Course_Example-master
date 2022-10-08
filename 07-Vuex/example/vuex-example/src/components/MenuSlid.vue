@@ -4,12 +4,8 @@ import { useStore } from "vuex";
 export default {
   setup() {
     const store = useStore();
-    const isOpen = computed(() => {
-      return store.getters["isOpen"];
-    });
-    const handClickMenu = () => {
-      store.dispatch("handOpenState");
-    };
+    const isOpen = computed(() => store.getters["isOpen"]);
+    const handClickMenu = () => store.dispatch("handOpenState");
     return { isOpen, handClickMenu };
   },
 };

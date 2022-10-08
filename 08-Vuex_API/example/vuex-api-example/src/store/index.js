@@ -1,61 +1,64 @@
+// import axios from 'axios';
 import { createStore } from "vuex";
-import { apiGetPhotoRequest } from "../api";
-
-export default createStore({
+import { apiGetPhotoRequest } from '@/api';
+export default createStore({ 
   state: {
     photoArr: [],
     idx: 0,
     isLoad: false,
+    isLogin:false,
+    isOpen:false,
+    isMenuOpen: false
   },
   actions: {
-    async initLoad({ commit }) {
-      try {
+    async initHandleActions(context){
+      try{
+        // 使用 api/index 的方式載入api
         const res = await apiGetPhotoRequest();
-        commit("setPhoto", res.data);
+        context.commit('initHandleMutations',res.data)
         return res.data;
-      } catch (error) {
-        console.error(error);
+      }catch(error){
+        console.log(error);
       }
     },
-    handLoadState({ commit }, bool) {
-      commit("setLoadState", bool);
-    },
-    handAddPage({ commit }) {
-      commit("AddPage");
-    },
-    handRemovePage({ commit }) {
-      commit("RemovePage");
-    },
+    // return axios.get('https://vue-lessons-api.herokuapp.com/photo/list')
+    //   .then((res) => {
+    //     context.commit('initHandleMutations',res.data)
+    //     return res.data;
+    //   }).catch((error) => { console.log(error.response.data) });
+    loadHandleActions(context,bool){context.commit('loadHandleMutations',bool)},
+    addHandleActions({commit}){commit('addHandleMutations')},
+    removeHandleActions({commit}){commit('removeHandleMutations')},
+    loginHandleActions({commit},bool){commit("loginHandleMutations",bool)},
+    menuHandleActions({commit},bool){commit("menuHandleMutations",bool)},
+    menuOpenHandActions({ commit }, bool) {commit("menuOpenHandMutations",bool)},
   },
   mutations: {
-    setPhoto(state, payload) {
-      state.photoArr = payload;
+    initHandleMutations(state,dataLoad){
+      state.photoArr = dataLoad; 
+      console.log(state.photoArr)
     },
-    setLoadState(state, bool) {
-      state.isLoad = bool;
-    },
-    AddPage(state) {
+    loadHandleMutations(state,bool){state.isLoad = bool},
+    addHandleMutations(state){
       state.idx++;
-      if (state.idx > state.photoArr.length - 1) {
-        state.idx = 0;
-      }
+      if(state.idx > state.photoArr.length - 1) state.idx = 0;
     },
-    RemovePage(state) {
+    removeHandleMutations(state){
       state.idx--;
-      if (state.idx < 0) {
-        state.idx = state.photoArr.length - 1;
-      }
+      if(state.idx < 0) state.idx = state.photoArr.length - 1;
     },
+    // loginHandleMutations(state,bool){state.isLogin = bool},
+    // menuHandleMutations(state,bool){state.isOpen = bool},
+    loginHandleMutations(state,bool){state.isLogin = !state.isLogin},
+    menuHandleMutations(state,bool){state.isOpen = !state.isOpen},
+    menuOpenHandMutations(state,bool) {state.isMenuOpen = bool},
   },
   getters: {
-    isLoad(state) {
-      return state.isLoad;
-    },
-    photoArr(state) {
-      return state.photoArr;
-    },
-    idx(state) {
-      return state.idx;
-    },
+    photoArr(state){ return state.photoArr },
+    idx(state){ return state.idx },
+    isLoad(state){ return state.isLoad },
+    isLogin: (state) => state.isLogin,
+    isOpen: (state) => state.isOpen,
+    isMenuOpen: (state) => state.isMenuOpen,
   },
 });

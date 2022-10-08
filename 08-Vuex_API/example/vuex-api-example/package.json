@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
-  },
+  }, 
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
@@ -23,6 +23,7 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
   ]
 }

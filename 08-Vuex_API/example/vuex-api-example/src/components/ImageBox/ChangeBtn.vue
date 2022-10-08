@@ -4,15 +4,8 @@ import { useStore } from "vuex";
 export default {
   setup() {
     const store = useStore();
-
-    const addImg = () => {
-      store.dispatch("handAddPage");
-    };
-
-    const removeImg = () => {
-      store.dispatch("handRemovePage");
-    };
-
+    const addImg = () => store.dispatch('addHandleActions');
+    const removeImg = () => store.dispatch('removeHandleActions');
     return { addImg, removeImg };
   },
 };

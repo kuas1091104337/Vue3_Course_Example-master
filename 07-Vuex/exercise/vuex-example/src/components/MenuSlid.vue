@@ -1,14 +1,22 @@
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 export default {
-  setup() {
-    const handClickMenu = () => {};
-    return { handClickMenu };
+  setup() { 
+    const store = useStore(),
+    isOpen = computed(() => store.getters.isOpen),
+          clickMenuHandle = () => { 
+            store.dispatch('menuHandleAction')
+            console.log(store);
+            console.log(isOpen.value);
+          };
+    return { clickMenuHandle, isOpen };
   },
 };
 </script>
 <template>
-  <div class="menu open">
-    <a class="closeBtn" @click="handClickMenu">
+  <div :class="['menu',{open:isOpen}]">
+    <a class="closeBtn" @click="clickMenuHandle">
       <i class="fas fa-times fa-3x"></i>
     </a>
     <ul class="nav">
@@ -16,6 +24,7 @@ export default {
       <li><a>content</a></li>
       <li><a>user</a></li>
       <li><a>address</a></li>
+      <li><a>{{isOpen}}</a></li>
     </ul>
   </div>
 </template>

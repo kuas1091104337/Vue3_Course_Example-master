@@ -1,14 +1,15 @@
 <script>
+import { useStore } from 'vuex';
 export default {
   setup() {
-    const handClickMenu = () => {};
-
-    return { handClickMenu };
-  },
+    const store = useStore(),
+          clickMenuHandle = () => store.dispatch('menuHandleAction');
+    return { clickMenuHandle };
+  }
 };
 </script>
 <template>
-  <a class="menuBtn" @click="handClickMenu">
+  <a class="menuBtn" @click="clickMenuHandle">
     <i class="fas fa-bars fa-3x"></i>
   </a>
 </template>

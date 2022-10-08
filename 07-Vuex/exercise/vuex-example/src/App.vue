@@ -2,13 +2,7 @@
 import MenuBtn from "../src/components/MenuBtn.vue";
 import MenuSlid from "../src/components/MenuSlid.vue";
 export default {
-  components: {
-    MenuBtn,
-    MenuSlid,
-  },
-  setup() {
-    return {};
-  },
+  components: { MenuBtn, MenuSlid },
 };
 </script>
 <template>
