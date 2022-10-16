@@ -6,23 +6,61 @@
     <title>let 與 const</title>
   </head>
   <body>
-    <script>
-      if(true){
-        var a=1;
-        let b=2;
-        const c=3;
-      }
-      console.log(a);
-      // console.log(b);
-      // console.log(c);
-      var arr = [1,2,3];
-      // if(true){
-      //   var arr = [];
-      // }
-      if(true){
-        let arr = [];
-      }
-      console.log(arr); 
-    </script>
+<script>
+  if(true){
+    var a=1;
+    let b=2;
+    const c=3;
+  }
+  console.log(a);
+  // console.log(b);
+  // console.log(c);
+  var arr = [1,2,3];
+  // if(true){
+  //   var arr = [];
+  // }
+  if(true){
+    let arr = [];
+  }
+  console.log(arr); 
+  
+const debounce = (func, holdSec, execAsap) => {
+  let timeout;
+  return function(){
+    const obj = this, 
+          args = arguments,
+          delayed = () => {
+            if(!execAsap) func.apply(obj, args);
+            timeout = null;
+          };
+    if(timeout){
+      clearTimeout(timeout);
+    }else if(execAsap){
+      func.apply(obj, args);
+    };
+    timeout = setTimeout(delayed, holdSec || 100);
+  };
+};
+window.onresize = debounce(() => console.log('onresize 多次觸發的解決方法1'),100,true);
+
+let timer = null
+const windowResizeHandle = () => {
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          console.log('onresize 多次觸發的解決方法2');
+        },100);
+      };
+window.addEventListener('resize',windowResizeHandle);
+
+// const show = (a,b,c) => { // arguments is not defined
+function show(a,b,c){
+    console.log(a,b,c);
+    console.log(arguments);
+    console.log(arguments[0]);
+    console.log(arguments.length);
+    console.log(typeof arguments);
+}
+show(1,2,3);
+</script>
   </body>
 </html>
