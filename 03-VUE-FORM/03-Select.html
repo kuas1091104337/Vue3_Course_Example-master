@@ -16,9 +16,7 @@
             v-for="item in twZip.city"
             :key="item.name"
             :value="item.name"
-          >
-            {{item.name}}
-          </option>
+          >{{item.name}}</option>
         </select>
         <select v-model="selectArea">
           <option disabled value="">請選擇區域</option>
@@ -26,9 +24,7 @@
             v-for="item in twZip.area"
             :key="item.name"
             :value="item.zip"
-          >
-            {{item.name}}
-          </option>
+          >{{item.name}}</option>
         </select>
       </div>
       <a class="btn" @click="handSubmit">送出</a>
@@ -39,20 +35,21 @@
       const {ref, reactive, watch, onMounted} = Vue,
       App = {
         setup(){
-          const twZip = reactive({city:[],area:[]}),
-                selectCity = ref(''),
-                selectArea = ref(''),
+          const twZip = reactive({city:[],area:[]}), selectCity = ref(''), selectArea = ref(''),
                 handSubmit = () => console.log(`${selectCity.value}, ${selectArea.value}`);
           watch(selectCity,(newCity) => {
             const newArr = twZip.city.filter(city => city.name === newCity);
+            console.log(newArr);
             twZip.area = newArr[0].area;
             selectArea.value = '';
             console.log(newArr[0].area)
           });
           onMounted(() => {
-            axios.get('https://vue-lessons-api.herokuapp.com/city/list')
+            axios.get('https://vue-lessons-api.vercel.app/city/list')
             .then(function(res){
               twZip.city = res.data.twzip.city;
+              // selectCity.value = twZip.city[0].name
+              // selectArea.value = twZip.city[0].area
               console.log(twZip.city);
               // console.log(res.data.twzip.city); // console.log(twZip);
             }).catch(function(error){
