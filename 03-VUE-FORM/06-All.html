@@ -46,6 +46,11 @@
         <label for="checkbox">我已閱讀使用者條款</label>
       </div>
       <a class="btn" @click="handSubmit">送出</a>
+
+      <input type="number" id="inputbar" placeholder="numbers">
+      <label for="inputbar" @click="inputBarVal(6)">click</label>
+
+      <a @click="handClickFn(100, $event)" href="javascript:;">click</a>
     </div>
     <script src="./js/vue.js"></script>
     <script>
@@ -79,6 +84,14 @@
                   }
                   console.log(data);
                   console.log(courseslist.selectArr);
+                },
+                inputBarVal = (val) => {
+                  // console.log(e);
+                  console.log(val);
+                },
+                handClickFn = (num, e) => {
+                  console.log(num);
+                  console.log(e);
                 };
           return {email,password,terms,handSubmit,courseslist};
         },
