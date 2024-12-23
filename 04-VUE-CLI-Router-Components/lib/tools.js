@@ -14,3 +14,4 @@ export const numPrice = (num) => {
   overArr.reverse();
   return overArr.join("");
 };
+

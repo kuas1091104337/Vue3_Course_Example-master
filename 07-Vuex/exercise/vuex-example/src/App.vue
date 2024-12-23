@@ -1,4 +1,5 @@
 <script>
+
 import MenuBtn from "../src/components/MenuBtn.vue";
 import MenuSlid from "../src/components/MenuSlid.vue";
 export default {
@@ -37,7 +38,8 @@ body {
   > .content {
     width: 100%;
     height: 100%;
-    background-image: url("https://source.unsplash.com/WLUHO9A_xik/1600x900");
+    // background-image: url("https://source.unsplash.com/WLUHO9A_xik/1600x900");
+    background-color:blue;
     background-size: cover;
     background-position: center;
     display: flex;

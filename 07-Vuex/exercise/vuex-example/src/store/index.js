@@ -15,7 +15,7 @@ export default createStore({
       state.isOpen = bool;
     }
   },
-  getters: {
+  getters: {//資料流同一由getters取得
     isOpen(state){
       return state.isOpen;
     }

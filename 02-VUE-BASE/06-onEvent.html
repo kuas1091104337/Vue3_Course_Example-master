@@ -9,6 +9,8 @@
     <div id="app">
       <h1>{{num}}</h1>
       <h2>{{data.num}}</h2>
+      <p>{{onlyNum}}</p>
+      <p>{{onlyData.num}}</p>
       <!-- v-on: 可以用 @ 來縮寫 -->
       <button v-on:click="add">Add</button>
       <button @click="remove">Remove</button>
@@ -41,7 +43,7 @@
           console.log(data);
           console.log(test);
           // console.log(test.value);
-          return {num, data, add, remove, test};
+          return {num, data, add, remove, test, onlyNum, onlyData};
         },
       };
       Vue.createApp(App).mount("#app");

@@ -15,7 +15,7 @@ export default {
 };
 </script>
 <template>
-  <div :class="['menu',{open:isOpen}]">
+  <div :class="['menu',{'menu-open':isOpen}]">
     <a class="closeBtn" @click="clickMenuHandle">
       <i class="fas fa-times fa-3x"></i>
     </a>
@@ -38,9 +38,7 @@ export default {
   z-index: 20;
   background-color: #fff;
   transition: right 0.3s;
-  &.open {
-    right: 0px;
-  }
+  &-open { right: 0px; }
   > a.closeBtn {
     cursor: pointer;
     position: absolute;

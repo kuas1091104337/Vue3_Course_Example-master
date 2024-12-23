@@ -4,31 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>readonly</title>
-    <style>
-      button {
-        color: red;
-      }
-    </style>
   </head>
   <body>
     <div id="app">
-      <h1>{{Num.idx}}</h1>
-      <button @click="AddFn">Add</button>
-      <button @click="Test">Add copy</button>
+      <h1>{{num.idx}}</h1>
+      <button v-on:click="addNum">Add</button>
+      <button v-on:click="addCopyNumFn">Add copy</button>
     </div>
     <script src="./js/vue.js"></script>
     <script>
-      const { reactive } = Vue;
+      const { reactive, readonly } = Vue;
       const App = {
         setup() {
-          const Num = reactive({ idx: 0 });
-          const AddFn = () => {
-            Num.idx++;
+          const num = reactive({ idx: 0 });
+          // readonly 就是讓你的 ref 或是 reactive 的資料只可以讀取不可以被修改
+          // 非常適合用在參數傳遞的時候避免不小心被修改資料
+          const copyNum = readonly(num);
+          const addNum = () => {
+            num.idx++;
+            console.log("1 num=>", num);
+            console.log("1 copyNum=>", copyNum);
           };
-
-          const Test = () => {};
-
-          return { Num, AddFn, Test };
+          // warning -> Set operation on key "idx" failed: target is readonly.
+          const addCopyNumFn = () => {
+            copyNum.idx++;
+            console.log("2 num=>", num);
+            console.log("2 copyNum=>", copyNum);
+          };
+          return {
+            num,
+            addNum,
+            addCopyNumFn,
+          };
         },
       };
       Vue.createApp(App).mount("#app");
